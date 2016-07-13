@@ -67,7 +67,7 @@ set /A total_hour="%total_time% %% 60"
 @rem Handle if it wrapped around over midnight
 if "%total_hour:~0,1%"=="-" set /A total_hour=%total_hour% + 24
 
-echo %label:"=%:	%total_hour%:%total_min%:%total_sec%.%total_hundredths%
+echo|set /p= %label:"=%:	%total_hour%:%total_min%:%total_sec%.%total_hundredths%
 
 
 @rem --------------------------------------------
