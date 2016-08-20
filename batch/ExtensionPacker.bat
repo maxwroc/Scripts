@@ -16,13 +16,13 @@ if not exist %zip% (
   )
 )
 
-if not exist %1\manifest.json (
-  call :error "manifest.json not found: %1\manifest.json"
+if not exist %~1\manifest.json (
+  call :error "manifest.json not found: %~1\manifest.json"
   goto :eof
 )
 
 REM extract extension name and version
-for /F delims^=^"^ tokens^=2^,4 %%g IN (%1\manifest.json) DO (
+for /F delims^=^"^ tokens^=2^,4 %%g IN (%~1\manifest.json) DO (
   if %%g==version (
     set version=%%h
   )
@@ -60,7 +60,7 @@ if %errorlevel% neq 0 (
 )
 
 REM copy extension files to temporary dir
-xcopy /s %1\* %tmpDir%
+xcopy /s %~1\* %tmpDir%
 if %errorlevel% neq 0 (
   call :error "Failed copying files"
   goto :eof
