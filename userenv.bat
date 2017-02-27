@@ -5,7 +5,7 @@ set scriptsdir=%~dp0
 set programsdir=C:\Programs
 set startdir=D:\Projects
 
-call %scriptsdir%git-aliases.bat
+call %scriptsdir%batch\git-aliases.bat
 
 doskey hosts=notepad "C:\Windows\System32\drivers\etc\hosts"
 doskey ls=dir /B
