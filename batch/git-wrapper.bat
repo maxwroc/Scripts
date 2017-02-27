@@ -33,8 +33,12 @@ call :listbranches "Available branches:"
 goto :setprompt
 
 :checkout
-call :listbranches "Select branch to checkout:" "Switching to branch" "git checkout"
+::check if command has more than 2 args
+if "%3" NEQ "" (
+  goto :executecommand
+)
 
+call :listbranches "Select branch to checkout:" "Switching to branch" "git checkout"
 
 
 :setprompt
