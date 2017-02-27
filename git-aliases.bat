@@ -11,7 +11,6 @@ doskey gtp=git push -u origin head
 doskey gtpl=git pull origin master
 doskey gtb=%wrapper% branch
 doskey gtch=%wrapper% checkout $*
-doskey git=%wrapper% $*
 
 echo Initializing GIT wrapper
 call %wrapper% init
