@@ -13,9 +13,13 @@ goto :setprompt
 
 :branch
 if "%2" NEQ "" (
-  if "%2" EQU "-d" (
+  set res=F
+  ::check if second param is for deleting branch
+  if "%2" EQU "-d" set res=T
+  if "%2" EQU "-D" set res=T
+  if "!res!"=="T" (
     if "%3" EQU "" (
-      call :listbranches "Select branch to delete:" "Deleting branch" "git branch -d"
+      call :listbranches "Select branch to delete:" "Deleting branch" "git branch %2"
       goto :eof
     )
   )
