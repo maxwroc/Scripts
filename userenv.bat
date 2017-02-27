@@ -7,6 +7,8 @@ set startdir=D:\Projects
 
 if exist %scriptsdir%customvars.bat call %scriptsdir%customvars.bat
 
+call %scriptsdir%git-aliases.bat
+
 doskey hosts=notepad "C:\Windows\System32\drivers\etc\hosts"
 doskey ls=dir /B
 doskey hlp=doskey /macros:all
