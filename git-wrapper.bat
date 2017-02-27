@@ -2,6 +2,8 @@
 setlocal enableextensions enabledelayedexpansion
 
 if "%1"=="branch" goto :branch
+if "%1"=="checkout" goto :checkout
+if "%1"=="init" goto :setprompt
 
 :executecommand
 
@@ -10,7 +12,6 @@ git.exe %*
 goto :setprompt
 
 :branch
-
 if "%2" NEQ "" (
   if "%2" EQU "-d" (
     if "%3" EQU "" (
@@ -21,6 +22,10 @@ if "%2" NEQ "" (
   goto :executecommand
 )
 
+call :listbranches "Available branches:"
+goto :setprompt
+
+:checkout
 call :listbranches "Select branch to checkout:" "Switching to branch" "git checkout"
 
 
@@ -60,7 +65,12 @@ FOR /F "tokens=* USEBACKQ" %%F IN (`git.exe branch`) DO (
   )
 )
 
-if !count! NEQ 1 (
+if exist "%confirmation%" (
+  if !count! EQU 1 (
+    echo You have only one branch.
+    exit /b 0
+  )
+  
   set /p answer=Enter branch number: 
   if !answer! gtr !count! goto :eof
   if !answer! lss 1 goto :eof
