@@ -9,4 +9,6 @@ Aditionally it shows current branch, highlighted in green, on the beginning of t
 
 **Note:** Once applied it replaces the "git" command. If you want to use Git binary directly type git.exe
 
+**Note:** Colors work only on Windows 10
+
 ![git wrapper](https://github.com/maxwroc/WinScripts/blob/master/batch/git-wrapper.png)
