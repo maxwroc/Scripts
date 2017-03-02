@@ -7,9 +7,10 @@ set startdir=D:\Projects
 
 call %scriptsdir%batch\git-aliases.bat
 
+doskey cdscripts=cd %scriptsdir%
 doskey hosts=notepad "C:\Windows\System32\drivers\etc\hosts"
-doskey ls=dir /B
-doskey hlp=doskey /macros:all
+doskey ls=dir /B $*
+doskey hlp=doskey /macros:all $*
 doskey cfg=notepad %scriptsdir%\userenv.bat
 doskey md5=%programsdir%\Checksum\fciv.exe -md5 $1
 doskey ip=for /f "tokens=14" %%a in ('ipconfig ^^^| findstr "IPv4"') do @echo IP: %%a

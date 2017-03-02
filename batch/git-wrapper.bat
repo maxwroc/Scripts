@@ -33,8 +33,8 @@ call :listbranches "Available branches:"
 goto :setprompt
 
 :checkout
-::check if command has more than 2 args
-if "%3" NEQ "" (
+::check if command has more than 1 arg
+if "%2" NEQ "" (
   goto :executecommand
 )
 
