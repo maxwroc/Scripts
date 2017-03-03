@@ -1,4 +1,8 @@
 @echo off
+
+set GITBRANCH=
+for /f %%I in ('git.exe rev-parse --abbrev-ref HEAD 2^> NUL') do set GITBRANCH=%%I
+
 setlocal enableextensions enabledelayedexpansion
 
 ::overriding git command
@@ -35,6 +39,27 @@ goto :setprompt
 :checkout
 ::check if command has more than 1 arg
 if "%2" NEQ "" (
+  ::check if user wants to create a branch
+  if "%2" EQU "-b" (
+    ::check if new branch name was passed
+    if "%3" NEQ "" (
+      ::check if the intention is to create branch based on current one
+      if "%4" EQU "" (
+        if "%GITBRANCH%" NEQ "master" (
+          echo You're trying to create a new branch based on the current one.
+          echo     Y - Create new branch based on %GITBRANCH%
+          echo     N - Create new branch based on master
+          set /p answer=Was that your intention? 
+          
+          if /I "%answer%" NEQ "y" (
+            echo Executing: git checkout %2 %3 master
+            git checkout %2 %3 master
+            goto :setprompt
+          )
+        )
+      )
+    )
+  )
   goto :executecommand
 )
 
