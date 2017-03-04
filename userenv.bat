@@ -39,10 +39,16 @@ echo Type [93mhlp[0m to see env options or [93mcfg[0m to configure them.
 
 goto :eof
 
+
+
+
 :hlp
+
 setlocal enabledelayedexpansion
-set tab=	
-SET "spaces=-------------------------------"
+::required by middots below
+chcp 65001
+SET "spaces=·······························"
+
 for /f "tokens=3,* delims=:^=" %%a in ('findstr /s /i doskey %scriptsdir%*.bat') do (
   set "alias=%%a"
   ::check if it starts with doskey keyword (skipping code which doesn't set dos keys)
@@ -57,16 +63,16 @@ for /f "tokens=3,* delims=:^=" %%a in ('findstr /s /i doskey %scriptsdir%*.bat')
 goto :eof
 
 :formatout
-CALL :padright alias 20
-ECHO  %alias% %command%
-GOTO :eof
+call :padright alias 20
+echo  %alias% %command%
+goto :eof
 
 :padright
-CALL SET padded=%%%1%% %spaces%
-CALL SET %1=%%padded:~0,%2%%
-GOTO :eof
+call set padded=%%%1%% %spaces%
+call set %1=%%padded:~0,%2%%
+goto :eof
 
 :padleft
-CALL SET padded=%spaces%%%%1%%
-CALL SET %1=%%padded:~-%2%%
-GOTO :eof
+call set padded=%spaces%%%%1%%
+call set %1=%%padded:~-%2%%
+goto :eof

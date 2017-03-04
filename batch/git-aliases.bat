@@ -15,4 +15,4 @@ doskey gtb=%wrapper% branch $*
 doskey gtch=%wrapper% checkout $*
 
 echo Initializing GIT wrapper
-call %wrapper% init
+call %wrapper% /init

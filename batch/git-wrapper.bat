@@ -10,7 +10,7 @@ doskey git=%0 $*
 
 if "%1"=="branch" goto :branch
 if "%1"=="checkout" goto :checkout
-if "%1"=="init" goto :setprompt
+if "%1"=="/init" goto :setprompt
 
 :executecommand
 
