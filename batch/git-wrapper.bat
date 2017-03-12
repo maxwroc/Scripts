@@ -51,7 +51,7 @@ if "%2" NEQ "" (
           echo     N - Create new branch based on master
           set /p answer=Was that your intention? 
           
-          if /I "%answer%" NEQ "y" (
+          if /I "!answer!" NEQ "y" (
             echo Executing: git checkout %2 %3 master
             git checkout %2 %3 master
             goto :setprompt
