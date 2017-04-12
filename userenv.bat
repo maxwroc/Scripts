@@ -7,6 +7,11 @@ set scriptsdir=%~dp0
 set programsdir=C:\Programs
 set startdir=D:\Projects
 
+if exist %scriptsdir%customvars.bat (
+  echo Applying custom script
+  call %scriptsdir%customvars.bat
+)
+
 call %scriptsdir%batch\git-aliases.bat
 
 doskey n=notepad $*
@@ -23,11 +28,6 @@ doskey searchfor=%scriptsdir%batch\searchfor.bat $*
 doskey whereis=dir /b /s $*
 
 if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
-
-if exist %scriptsdir%customvars.bat (
-  echo Applying custom script
-  call %scriptsdir%customvars.bat
-)
 
 chdir /D %startdir%
 
