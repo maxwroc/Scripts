@@ -92,7 +92,7 @@ if "!query!"=="" (
 )
 
 set query=!query:"=!
-set command=findstr /s /n /i /r /c:"!query!" !extensions:"=!
+set command=findstr /s /n /i /r /c:"[33m!query![0m" [36m!extensions:"=![0m
 
 echo   Query:   !query!
 echo   Ext:     !extensions!
@@ -108,9 +108,9 @@ goto :eof
 
 :printError
 echo.
-echo Error: %~1
+echo [31mError: %~1 [0m
 echo.
-echo To get a list of available parameterst type: %~n0 -h 
+echo To get a list of available parameterst type: [33m%~n0 -h [0m
 exit /b 1
 
 :usage
