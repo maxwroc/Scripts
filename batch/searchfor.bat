@@ -2,6 +2,11 @@
 
 setlocal enableDelayedExpansion
 
+set extensionGroups[code]=*.ts *.tsx *.css *.cs *.cshtml *.ini *.bond
+set extensionGroups[client]=*.ts *.tsx *.css
+set extensionGroups[server]=*.cs *.cshtml
+set extensionGroups[config]=*.ini *.bond
+
 set extensions=*.*
 set query=
 
@@ -53,17 +58,12 @@ if not "!param!"=="" (
       
       REM check if type param was passed
       if "!param!"=="-type" (
-        if "!paramValue!"=="code" (
-          set extensions=*.ts *.tsx *.css *.cs *.cshtml *.ini *.bond
-        )
-        if "!paramValue!"=="client" (
-          set extensions=*.ts *.tsx *.css
-        )
-        if "!paramValue!"=="server" (
-          set extensions=*.cs *.cshtml
-        )
-        if "!paramValue!"=="config" (
-          set extensions=*.ini *.bond
+        call set types=%%extensionGroups[!paramValue!]%%
+        if not "!types!"=="" (
+          set extensions=!types!
+        ) else (
+          call :printError "Unknown type [!paramValue!]"
+          goto :eof
         )
         REM remove param value
         shift
@@ -106,10 +106,29 @@ echo.
 
 goto :eof
 
+:printError
+echo.
+echo Error: %~1
+echo.
+echo To get a list of available parameterst type: %~n0 -h 
+exit /b 1
+
 :usage
 echo.
 echo Usage
-echo    %~n0 [-ext "*.xml *.txt"] [-type code^|client^|server^|config] [-file pattern] query
+echo    %~n0 [-ext extensions] [-type value] [-file pattern] query
+echo.
+echo    -ext
+echo        Space separated file extensions (wildcrds are not necessary).
+echo        If specyfing more than one extension they must be wrapped in quotes.
+echo.
+echo    -type values:
+for /f "tokens=2,3 delims=[]=" %%a in ('set extensionGroups') do (
+  echo        %%a	%%b
+)
+echo.
+echo    -file
+echo        Pattern can be any string with wildcards. For example: *Look*for.txt
 echo.
 echo Examples
 echo    %~n0 -ext ini search query
