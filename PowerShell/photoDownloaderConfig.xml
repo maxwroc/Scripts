@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<config>
+  <Sources>
+    <Source Name="ONEPLUS A3003">
+      <Path>ONEPLUS A3003\Internal shared storage\DCIM\Camera</Path>
+      <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
+      <Filters>
+        <Filter Type="NameAsDate">
+          <NameFormat>\I\M\G\_YYYYMMDD_HHIISS\.\j\p\g</NameFormat>
+        </Filter>
+      </Filters>
+    </Source>
+    <Source Name="Dev (D:)">
+      <Path>D:\Photos\Wlodawa</Path>
+      <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
+    </Source>
+  </Sources>
+  <Destination>
+    <Temp>D:\Photos\Temp</Temp>
+  </Destination>
+</config>
