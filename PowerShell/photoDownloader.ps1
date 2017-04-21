@@ -9,8 +9,15 @@ if(-not (Test-Path $configFileName)) {
 }
 
 Write-Verbose "Reading config"
-$config = [xml] (Get-Content $configFileName)
-$config = $config.Config
+try {
+    $config = [xml] (Get-Content $configFileName)
+    $config = $config.Config
+}
+catch {
+    Write-Error "Failed to load the config file: $($_.Exception.Message)"
+    Exit
+}
+
 
 # http://blogs.technet.com/b/heyscriptingguy/archive/2013/04/26/use-powershell-to-work-with-windows-explorer.aspx
 $o = New-Object -com Shell.Application
@@ -65,20 +72,39 @@ Function GetSubFolder ($folder, $sourcePathChunks, $sourcePathDepth)
     return
 }
 
-Function CopyFiles ($sourceFolder, $startIndex) {
-    Write-Verbose "Start index $($startIndex)"
+Function CopyFiles ($sourceFolder, $filters) {
     
     $items = $sourceFolder.Items()
 
     $cleanName = $items.Item(0).Name.Replace("IMG_", "")
     $targetPath = "D:\Photos\Temp\$($cleanName)"
-
-    $photo = $items.Item(0)
     
-    Write-Verbose "create target dir"
+    Write-Verbose "Getting temporary directory dir"
     $target = $o.NameSpace("D:\Photos\Temp")
-    $target
 
+    # create empty collection
+    $filesToProcess = @()
+    for ($i = 0; $i -lt $items.Count; $i++) {
+        Write-Progress -Activity "Detecting how many items to copy" -PercentComplete ($i / $items.Count * 100)
+
+        $isValid = 1
+        foreach ($filter in $filters) {
+            $isValid = IsValidFile $items.Item($i) $filter
+            if (-not $isValid) {
+                break
+            }
+        }
+
+        if (-not $isValid) {
+            continue
+        }
+
+        $filesToProcess += ,$items.Item($i)
+    }
+
+    Write-Host "Files to process: $($filesToProcess.Count)"
+
+    return
     Write-Verbose "copy"
     $target.CopyHere($photo, 0)
     Write-Verbose "copied"
@@ -91,16 +117,40 @@ Function CopyFiles ($sourceFolder, $startIndex) {
     #-ItemUsingExplorer $items.Item(0).Path "D:\Photos\Temp" -CopyFlags 16
 }
 
+Function IsValidFile ($file, $filter) {
+    $result = 1
+    switch ($filter.Type) {
+        "NewerThan" { 
+            $namePattern = $filter.ExtractDateFromName
+            $date = [DateTime]::Parse($filter.Date)
+            $fileName = $file.Name
+            if($namePattern.SubString) {
+                $fileName = $fileName.Substring($namePattern.Substring.From, $namePattern.Substring.Length)
+                Write-Verbose "Cutting file name: $($file.Name) -> $fileName"
+            }
+            Write-Verbose "Is valid file: $($fileName) [filter: $($filter.Type)][pattern: $($namePattern.Pattern)]"
+            $parsedDate = [DateTime]::ParseExact($fileName, $namePattern.Pattern, $null)
+            
+            if ($parsedDate -lt $date) {
+                Write-Verbose "File too old: $($fileName)"
+                $result = 0
+            }
+         }
+        Default {}
+    }
+
+    return $result
+}
+
 
 Write-Verbose "Iterating over available dives:"
 foreach ($device in $folder.Items()) {
     Write-Verbose "    Checking config for device $($device.Name)"
-    $deviceConfig = $config.Sources.Source | where {$_.Name -eq $device.Name}
+    $deviceConfig = $config.Sources.Source | Where-Object {$_.Name -eq $device.Name}
 
     if($deviceConfig) {
         Write-Verbose "Loaded config for device $($device.Name)"
         Write-Verbose "    Path: $($deviceConfig.Path)"
-        Write-Verbose "    Last index: $($deviceConfig.LastDownloadedFileIndex)"
 
         $sourceFolder = GetSubFolder $device.GetFolder().Items() $deviceConfig.Path.Split("\") 1
         if(!$sourceFolder) {
@@ -108,7 +158,7 @@ foreach ($device in $folder.Items()) {
             exit
         }
 
-        CopyFiles $sourceFolder $deviceConfig.LastDownloadedFileIndex
+        CopyFiles $sourceFolder $deviceConfig.Filters.Filter
         break
     }
 }

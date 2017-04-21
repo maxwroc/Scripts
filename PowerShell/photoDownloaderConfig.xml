@@ -5,14 +5,31 @@
       <Path>ONEPLUS A3003\Internal shared storage\DCIM\Camera</Path>
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
       <Filters>
-        <Filter Type="NameAsDate">
-          <NameFormat>\I\M\G\_YYYYMMDD_HHIISS\.\j\p\g</NameFormat>
+        <Filter Type="NewerThan">
+          <Date>27/03/2017</Date>
+          <ExtractDateFromName>\I\M\G\_yyyyMMdd_HHmmss\.\j\p\g</ExtractDateFromName>
         </Filter>
       </Filters>
     </Source>
     <Source Name="Dev (D:)">
       <Path>D:\Photos\Wlodawa</Path>
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
+      <Filters>
+        <Filter Type="NewerThan">
+          <Date>27/03/2017</Date>
+          <ExtractDateFromName>
+            <Substring From="4" Length="15" />
+            <Pattern>yyyyMMdd_HHmmss</Pattern>
+            </ExtractDateFromName>
+        </Filter>
+        <Filter Type="older">
+          <Date>27/03/2017</Date>
+          <ExtractDateFromName>
+            <SubString From="4" To="15" />
+            <Pattern>yyyyMMdd_HHmmss</Pattern>
+          </ExtractDateFromName>
+        </Filter>
+      </Filters>
     </Source>
   </Sources>
   <Destination>
