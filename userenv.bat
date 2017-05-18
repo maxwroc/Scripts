@@ -12,10 +12,12 @@ if exist %scriptsdir%customvars.bat (
   call %scriptsdir%customvars.bat
 )
 
+cd /D %startdir%
+
 call %scriptsdir%batch\git-aliases.bat
 
 doskey n=notepad $*
-doskey cdscripts=cd %scriptsdir%
+doskey cdscripts=cd /D %scriptsdir%
 doskey hosts=notepad "C:\Windows\System32\drivers\etc\hosts"
 doskey ls=dir /B $*
 doskey hlp=%0 /hlp
@@ -28,8 +30,6 @@ doskey searchfor=%scriptsdir%batch\searchfor.bat $*
 doskey whereis=dir /b /s $*
 
 if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
-
-chdir /D %startdir%
 
 echo.
 echo Hello !!! [32mYou're ready to go[0m
