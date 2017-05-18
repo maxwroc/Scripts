@@ -6,8 +6,24 @@
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
       <Filters>
         <Filter Type="NewerThan">
-          <Date>27/03/2017</Date>
-          <ExtractDateFromName>\I\M\G\_yyyyMMdd_HHmmss\.\j\p\g</ExtractDateFromName>
+          <Date>17/04/2017</Date>
+          <ExtractDateFromName>
+            <Substring From="4" Length="15" />
+            <Pattern>yyyyMMdd_HHmmss</Pattern>
+            </ExtractDateFromName>
+        </Filter>
+      </Filters>
+    </Source>
+    <Source Name="Magdalena (Galaxy S5)">
+      <Path>Magdalena (Galaxy S5)\Card\DCIM\Camera</Path>
+      <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
+      <Filters>
+        <Filter Type="NewerThan">
+          <Date>01/03/2017</Date>
+          <ExtractDateFromName>
+            <Substring From="0" Length="15" />
+            <Pattern>yyyyMMdd_HHmmss</Pattern>
+            </ExtractDateFromName>
         </Filter>
       </Filters>
     </Source>
@@ -21,13 +37,6 @@
             <Substring From="4" Length="15" />
             <Pattern>yyyyMMdd_HHmmss</Pattern>
             </ExtractDateFromName>
-        </Filter>
-        <Filter Type="older">
-          <Date>27/03/2017</Date>
-          <ExtractDateFromName>
-            <SubString From="4" To="15" />
-            <Pattern>yyyyMMdd_HHmmss</Pattern>
-          </ExtractDateFromName>
         </Filter>
       </Filters>
     </Source>

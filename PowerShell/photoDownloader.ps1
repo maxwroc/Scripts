@@ -76,12 +76,6 @@ Function CopyFiles ($sourceFolder, $filters) {
     
     $items = $sourceFolder.Items()
 
-    $cleanName = $items.Item(0).Name.Replace("IMG_", "")
-    $targetPath = "D:\Photos\Temp\$($cleanName)"
-    
-    Write-Verbose "Getting temporary directory dir"
-    $target = $o.NameSpace("D:\Photos\Temp")
-
     # create empty collection
     $filesToProcess = @()
     for ($i = 0; $i -lt $items.Count; $i++) {
@@ -104,17 +98,18 @@ Function CopyFiles ($sourceFolder, $filters) {
 
     Write-Host "Files to process: $($filesToProcess.Count)"
 
-    return
-    Write-Verbose "copy"
-    $target.CopyHere($photo, 0)
-    Write-Verbose "copied"
+    $confirmation = Read-Host "Do you want to proceed and copy these files? [y/n]: "
+    if ($confirmation -eq "y") {
+        Write-Verbose "Getting temporary directory dir"
+        $target = $o.NameSpace("D:\Photos\Temp")
 
-    Write-Verbose "Copying from: $($items.Item(0).Path)"
-    Write-Verbose "To: $($targetPath)"
-    Copy-Item -LiteralPath "$($items.Item(0).Path)fdsfsdfsds" -Destination $targetPath
-    Write-Verbose "Done"
-
-    #-ItemUsingExplorer $items.Item(0).Path "D:\Photos\Temp" -CopyFlags 16
+        for ($i=0; $i -lt $filesToProcess.Count; $i++) {
+            $fileName = $filesToProcess[$i].Name
+            Write-Progress -Activity "Copying files" -status "    $fileName" -PercentComplete ($i / $filesToProcess.Count * 100)
+            Write-Verbose "Copying $fileName"
+            $target.CopyHere($filesToProcess[$i], 0)
+        }
+    }
 }
 
 Function IsValidFile ($file, $filter) {
