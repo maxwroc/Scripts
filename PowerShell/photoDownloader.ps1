@@ -10,8 +10,8 @@ if(-not (Test-Path $configFileName)) {
 
 Write-Verbose "Reading config"
 try {
-    $config = [xml] (Get-Content $configFileName)
-    $config = $config.Config
+    $configFile = [xml] (Get-Content $configFileName)
+    $config = $configFile.Config
 }
 catch {
     Write-Error "Failed to load the config file: $($_.Exception.Message)"
@@ -72,12 +72,14 @@ Function GetSubFolder ($folder, $sourcePathChunks, $sourcePathDepth)
     return
 }
 
-Function CopyFiles ($sourceFolder, $filters) {
+Function CopyFiles ($sourceFolder, $destination, $filters) {
     
+    Write-Verbose "Fetching files from source"
     $items = $sourceFolder.Items()
 
     # create empty collection
     $filesToProcess = @()
+    Write-Verbose "Iterating over $($items.Count) files"
     for ($i = 0; $i -lt $items.Count; $i++) {
         Write-Progress -Activity "Detecting how many items to copy" -PercentComplete ($i / $items.Count * 100)
 
@@ -101,13 +103,18 @@ Function CopyFiles ($sourceFolder, $filters) {
     $confirmation = Read-Host "Do you want to proceed and copy these files? [y/n]: "
     if ($confirmation -eq "y") {
         Write-Verbose "Getting temporary directory dir"
-        $target = $o.NameSpace("D:\Photos\Temp")
+        $target = $o.NameSpace($destination)
 
         for ($i=0; $i -lt $filesToProcess.Count; $i++) {
             $fileName = $filesToProcess[$i].Name
             Write-Progress -Activity "Copying files" -status "    $fileName" -PercentComplete ($i / $filesToProcess.Count * 100)
-            Write-Verbose "Copying $fileName"
-            $target.CopyHere($filesToProcess[$i], 0)
+            if(Test-Path "$($destination)\$fileName") {
+                Write-Host "    Skipping $fileName as it exists already."
+            }
+            else {
+                Write-Verbose "Copying $fileName"
+                $target.CopyHere($filesToProcess[$i], 0)
+            }
         }
     }
 }
@@ -117,7 +124,7 @@ Function IsValidFile ($file, $filter) {
     switch ($filter.Type) {
         "NewerThan" { 
             $namePattern = $filter.ExtractDateFromName
-            $date = [DateTime]::Parse($filter.Date)
+            $date = [DateTime]::ParseExact($filter.Date, "dd/MM/yyyy", $null)
             $fileName = $file.Name
             if($namePattern.SubString) {
                 $fileName = $fileName.Substring($namePattern.Substring.From, $namePattern.Substring.Length)
@@ -137,6 +144,30 @@ Function IsValidFile ($file, $filter) {
     return $result
 }
 
+Function UpdateFilters ($filters, $destinationDir) {
+    $updated = 0
+    Write-Verbose "Updating filters"
+    foreach ($filter in $filters) {
+        switch ($filter.Type) {
+            "NewerThan" {
+                $latest = Get-ChildItem -Path $destinationDir | Sort-Object LastAccessTime -Descending | Select-Object -First 1
+                $latestString = $latest.LastAccessTime.ToString("dd\/MM\/yyyy")
+                if ($latestString -ne $filter.Date) {
+                    $confirmation = Read-Host "The last file in the target dir is from $latestString do you want to update filter value? [y/n]"
+                    if ($confirmation -eq "y") {
+                        $filter.Date = $latestString
+                        $updated = 1
+                    }
+                }
+            }
+        }
+    }
+
+    if ($updated) {
+        Write-Verbose "Updating configuration: $PSScriptRoot\$configFileName"
+        $configFile.Save("$PSScriptRoot\$configFileName")
+    }
+}
 
 Write-Verbose "Iterating over available dives:"
 foreach ($device in $folder.Items()) {
@@ -152,8 +183,16 @@ foreach ($device in $folder.Items()) {
             Write-Error "Source folder not found: $($deviceConfig.Path)"
             exit
         }
+        
+        Write-Verbose "Check if destination folder exists: $($config.Destination.Temp)"
+        if(-not (Test-Path $config.Destination.Temp)) {
+            Write-Error "Destination folder not found ($($config.Destination.Temp))"
+            exit
+        }
 
-        CopyFiles $sourceFolder $deviceConfig.Filters.Filter
+        CopyFiles $sourceFolder $config.Destination.Temp $deviceConfig.Filters.Filter
+
+        UpdateFilters $deviceConfig.Filters.Filter $config.Destination.Temp
         break
     }
 }

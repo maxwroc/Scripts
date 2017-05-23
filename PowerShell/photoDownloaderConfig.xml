@@ -6,11 +6,11 @@
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
       <Filters>
         <Filter Type="NewerThan">
-          <Date>17/04/2017</Date>
+          <Date>23/05/2017</Date>
           <ExtractDateFromName>
             <Substring From="4" Length="15" />
             <Pattern>yyyyMMdd_HHmmss</Pattern>
-            </ExtractDateFromName>
+          </ExtractDateFromName>
         </Filter>
       </Filters>
     </Source>
@@ -23,7 +23,7 @@
           <ExtractDateFromName>
             <Substring From="0" Length="15" />
             <Pattern>yyyyMMdd_HHmmss</Pattern>
-            </ExtractDateFromName>
+          </ExtractDateFromName>
         </Filter>
       </Filters>
     </Source>
@@ -36,12 +36,12 @@
           <ExtractDateFromName>
             <Substring From="4" Length="15" />
             <Pattern>yyyyMMdd_HHmmss</Pattern>
-            </ExtractDateFromName>
+          </ExtractDateFromName>
         </Filter>
       </Filters>
     </Source>
   </Sources>
   <Destination>
-    <Temp>D:\Photos\Temp</Temp>
+    <Temp>D:\Download\Dzidzius\mama\kwiecien-maj</Temp>
   </Destination>
 </config>
