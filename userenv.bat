@@ -23,12 +23,14 @@ doskey lookfor=findstr /s /n /i $* *.cs *.spark *.ts *.xml
 doskey lookforany=findstr /s /n /i /c:$1 $2
 doskey whereis=dir /b /s $*
 
-if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
-
 if exist %scriptsdir%customvars.bat (
   echo Applying custom script
   call %scriptsdir%customvars.bat
 )
+
+if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
+
+
 
 chdir /D %startdir%
 
