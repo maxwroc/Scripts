@@ -7,10 +7,17 @@ set scriptsdir=%~dp0
 set programsdir=C:\Programs
 set startdir=D:\Projects
 
+if exist %scriptsdir%customvars.bat (
+  echo Applying custom script
+  call %scriptsdir%customvars.bat
+)
+
+cd /D %startdir%
+
 call %scriptsdir%batch\git-aliases.bat
 
 doskey n=notepad $*
-doskey cdscripts=cd %scriptsdir%
+doskey cdscripts=cd /D %scriptsdir%
 doskey hosts=notepad "C:\Windows\System32\drivers\etc\hosts"
 doskey ls=dir /B $*
 doskey hlp=%0 /hlp
@@ -19,20 +26,10 @@ doskey cfg=notepad %scriptsdir%\userenv.bat
 doskey md5=%programsdir%\Checksum\fciv.exe -md5 $1
 doskey ip=for /f "tokens=14" %%a in ('ipconfig ^^^| findstr "IPv4"') do @echo IP: %%a
 doskey rww=%scriptsdir%\batch\whack_all_slashes.bat $*
-doskey lookfor=findstr /s /n /i $* *.cs *.spark *.ts *.xml
-doskey lookforany=findstr /s /n /i /c:$1 $2
+doskey searchfor=%scriptsdir%batch\searchfor.bat $*
 doskey whereis=dir /b /s $*
 
-if exist %scriptsdir%customvars.bat (
-  echo Applying custom script
-  call %scriptsdir%customvars.bat
-)
-
 if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
-
-
-
-chdir /D %startdir%
 
 echo.
 echo Hello !!! [32mYou're ready to go[0m

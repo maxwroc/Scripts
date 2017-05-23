@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<config>
+  <Sources>
+    <Source Name="ONEPLUS A3003">
+      <Path>ONEPLUS A3003\Internal shared storage\DCIM\Camera</Path>
+      <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
+      <Filters>
+        <Filter Type="NewerThan">
+          <Date>17/04/2017</Date>
+          <ExtractDateFromName>
+            <Substring From="4" Length="15" />
+            <Pattern>yyyyMMdd_HHmmss</Pattern>
+            </ExtractDateFromName>
+        </Filter>
+      </Filters>
+    </Source>
+    <Source Name="Magdalena (Galaxy S5)">
+      <Path>Magdalena (Galaxy S5)\Card\DCIM\Camera</Path>
+      <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
+      <Filters>
+        <Filter Type="NewerThan">
+          <Date>01/03/2017</Date>
+          <ExtractDateFromName>
+            <Substring From="0" Length="15" />
+            <Pattern>yyyyMMdd_HHmmss</Pattern>
+            </ExtractDateFromName>
+        </Filter>
+      </Filters>
+    </Source>
+    <Source Name="Dev (D:)">
+      <Path>D:\Photos\Wlodawa</Path>
+      <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
+      <Filters>
+        <Filter Type="NewerThan">
+          <Date>27/03/2017</Date>
+          <ExtractDateFromName>
+            <Substring From="4" Length="15" />
+            <Pattern>yyyyMMdd_HHmmss</Pattern>
+            </ExtractDateFromName>
+        </Filter>
+      </Filters>
+    </Source>
+  </Sources>
+  <Destination>
+    <Temp>D:\Photos\Temp</Temp>
+  </Destination>
+</config>

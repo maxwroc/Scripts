@@ -1,6 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+for /f %%i in ('where 7z') do set zip=%%i
+if "%zip%" neq "" goto 7zFound
+
 set zip="C:\Program Files\7-Zip\7z.exe"
 set zip2="C:\Program Files (x86)\7-Zip\7z.exe"
 set version=
@@ -15,6 +18,8 @@ if not exist %zip% (
     set zip=%zip2%
   )
 )
+
+:7zFound
 
 if not exist %~1\manifest.json (
   call :error "manifest.json not found: %~1\manifest.json"
@@ -68,6 +73,7 @@ if %errorlevel% neq 0 (
 
 REM remove TS files
 del /s %tmpDir%\*.ts
+del /s %tmpDir%\*.map
 
 REM compress remaining files
 !zip! a -tzip "%zipFile%" "%tmpDir%\*"
