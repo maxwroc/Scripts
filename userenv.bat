@@ -12,7 +12,8 @@ if exist %scriptsdir%customvars.bat (
   call %scriptsdir%customvars.bat
 )
 
-cd /D %startdir%
+::switch to startdir only if nodirswitch flag is not set
+if not defined nodirswitch cd /D %startdir%
 
 call %scriptsdir%batch\git-aliases.bat
 
