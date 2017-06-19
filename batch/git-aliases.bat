@@ -13,6 +13,7 @@ doskey gtpl=git pull
 doskey gtplm=git pull origin master
 doskey gtb=%wrapper% branch $*
 doskey gtch=%wrapper% checkout $*
+doskey gtlc=git diff --name-status master..%GITBRANCH%
 
 echo Initializing GIT wrapper
 call %wrapper% /init
