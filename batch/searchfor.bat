@@ -3,6 +3,7 @@
 setlocal enableDelayedExpansion
 
 set extensionGroups[code]=*.ts *.tsx *.css *.cs *.cshtml *.ini *.bond
+set extensionGroups[codeext]=*.ts *.tsx *.css *.cs *.cshtml *.ini *.bond *.csproj *.bat *.txt *.resx
 set extensionGroups[client]=*.ts *.tsx *.css
 set extensionGroups[server]=*.cs *.cshtml
 set extensionGroups[config]=*.ini *.bond
@@ -92,15 +93,16 @@ if "!query!"=="" (
 )
 
 set query=!query:"=!
-set command=findstr /s /n /i /r /c:"[33m!query![0m" [36m!extensions:"=![0m
+set command=findstr /s /n /i /r /c:"!query!" !extensions:"=!
 
 echo   Query:   !query!
 echo   Ext:     !extensions!
-echo   Command: %command%
+echo   Command: findstr /s /n /i /r /c:"[33m!query![0m" [36m!extensions:"=![0m
 
 echo Proceed?
 pause
 echo.
+
 %command%
 
 
