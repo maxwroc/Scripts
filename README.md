@@ -8,7 +8,16 @@ Features:
 * Shows current branch, highlighted in green, on the beginning of the command prompt.
 * Prevents from unintentional branch creating based on current one (asks for confirmation)
 
-**Note:** Once applied it replaces the "git" command. If you want to use Git binary directly type git.exe
+#### How to install?
+To initialize you just need to call wrapper with an "/init" param:
+
+`git-wrapper /init`
+
+It is convenient to create a shortcut to CMD.EXE with the following command:
+
+`cmd.exe /k "[path_to_the_file]\git-wrapper.bat /init"`
+
+**Note:** Once applied it replaces the "git" command (you can still use all git commands as before). It works like an extension for the regular git.exe. If you need you can always use Git binary directly by typing git.exe
 
 **Note:** Colors work only on Windows 10
 
