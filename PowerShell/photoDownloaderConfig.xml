@@ -19,7 +19,7 @@
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
       <Filters>
         <Filter Type="NewerThan">
-          <Date>22/10/2017</Date>
+          <Date>23/11/2017</Date>
           <DateB>01/03/2017</DateB>
           <ExtractDateFromName>
             <Substring From="0" Length="15" />
@@ -43,6 +43,6 @@
     </Source>
   </Sources>
   <Destination>
-    <Temp>D:\Photos\pazdziernik</Temp>
+    <Temp>D:\Photos\listopad</Temp>
   </Destination>
 </config>
