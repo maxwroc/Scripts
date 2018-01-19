@@ -74,7 +74,7 @@ Function GetSubFolder ($folder, $sourcePathChunks, $sourcePathDepth)
 
 Function CopyFiles ($sourceFolder, $destination, $filters) {
     
-    Write-Verbose "Fetching files from source"
+    Write-Verbose "Fetching files from source (this can take a while for a large directories)"
     $items = $sourceFolder.Items()
 
     # create empty collection
