@@ -126,6 +126,12 @@ Function IsValidFile ($file, $filter) {
             $namePattern = $filter.ExtractDateFromName
             $date = [DateTime]::ParseExact($filter.Date, "dd/MM/yyyy", $null)
             $fileName = $file.Name
+            
+            if ($fileName.Length -lt [int]$namePattern.Substring.From + $namePattern.Substring.Length) {
+                Write-Verbose "Too short name of the file: $fileName ($($fileName.Length) < $(([int]$namePattern.Substring.From) + $namePattern.Substring.Length))"
+                return 0
+            }
+            
             if($namePattern.SubString) {
                 $fileName = $fileName.Substring($namePattern.Substring.From, $namePattern.Substring.Length)
                 Write-Verbose "Cutting file name: $($file.Name) -> $fileName"
