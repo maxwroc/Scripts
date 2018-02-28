@@ -192,8 +192,15 @@ foreach ($device in $folder.Items()) {
         
         Write-Verbose "Check if destination folder exists: $($config.Destination.Temp)"
         if(-not (Test-Path $config.Destination.Temp)) {
-            Write-Error "Destination folder not found ($($config.Destination.Temp))"
-            exit
+            $ans = Read-Host "Destination folder does not exist do you want to create it? [y/n]"
+            if($ans -eq "y") {
+                New-Item -ItemType directory $config.Destination.Temp
+            }
+            
+            if(-not (Test-Path $config.Destination.Temp)) {
+                Write-Error "Destination folder not found ($($config.Destination.Temp))"
+                exit
+            }
         }
 
         CopyFiles $sourceFolder $config.Destination.Temp $deviceConfig.Filters.Filter
