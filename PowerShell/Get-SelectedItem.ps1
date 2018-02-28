@@ -1,5 +1,5 @@
 
-#. "$PSScriptRoot\Format-ColotTable.ps1"
+. "$PSScriptRoot\Format-ColorTable.ps1"
 
 Function Get-SelectedItem() {
     Param(
@@ -25,13 +25,7 @@ Function Get-SelectedItem() {
         }
 
         if ($PropertiesToDisplay.Count -gt 1) {
-            #[System.Collections.ArrayList]$itemsToDisplay = $Items | select -Property @{n="No"; e={ ($global:count++) }}, * | select -Property $props
-            [System.Collections.ArrayList]$itemsToDisplay = $Items
-            $itemsToDisplay = $itemsToDisplay | select -Property $PropertiesToDisplay | ForEach-Object {$index=1} {$_; $index++} | select -Property @{ Label="No";Expression={$index} }, *
-            $r = $itemsToDisplay.Add((New-Object PSObject -Property @{No="q"; $($PropertiesToDisplay[0])="to quit"}))
-            $itemsToDisplay | Format-Table -AutoSize
-            #$itemsToDisplay | Format-ColorTable -RowNumbers -ColumnColors @{ "No" = "Yellow" }
-            #exit
+            $Items | Format-ColorTable -RowNumbers -ColumnColors @{ "No" = "Yellow" }
         }
         else {
             # Printing list of items

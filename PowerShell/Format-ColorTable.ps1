@@ -1,31 +1,53 @@
 ﻿function Format-ColorTable {
 
     Param(
-        [Parameter(Mandatory=$True,  Position= 0, ValueFromPipeline=$True, ValueFromPipelineByPropertyName=$True)][Alias("O", "I")][Object]$Object,
-        [Parameter(Mandatory=$false,  Position= 1)][string[]]$Columns = @(),
-        [Parameter(Mandatory=$false,  Position= 2)][hashtable]$ColumnColors,
-        [Parameter(Mandatory=$false,  Position= 3)][switch]$RowNumbers,
-        [Parameter(Mandatory=$false,  Position= 4)][switch]$NoHeaders
+        [Parameter(Mandatory = $true, Position = 0, ValueFromPipeline = $true, ValueFromPipelineByPropertyName=$true)][Alias("O", "I")][Object]$Object,
+        [Parameter(Mandatory = $false, Position = 1)][string[]]$Columns = @(),
+        [Parameter(Mandatory = $false, Position = 2)][hashtable]$ColumnColors,
+        [Parameter(Mandatory = $false, Position = 3)][switch]$RowNumbers,
+        [Parameter(Mandatory = $false, Position = 4)][switch]$NoHeaders
     )
 
     Begin {
         [System.Collections.ArrayList]$results = @()
         [hashtable]$maxSize = @{}
 
-        if ($RowNumbers) {
+        $initColumnsFromObj = $false
+        if (-not $Columns -or $Columns.Count -eq 0) {
+            $initColumnsFromObj = $true
+        }
+
+        if (-not $initColumnsFromObj -and $RowNumbers) {
             $Columns = @("No") + @($Columns)
         }
     }
 
     Process {
-        #if ($Columns.Count)
+        $obj = $_
+        
+        if ($initColumnsFromObj) {
+            $Columns = $obj.PSStandardMembers.DefaultDisplayPropertySet.ReferencedPropertyNames
 
-        $obj = $_ | select -Property $Columns
+            if ($RowNumbers) {
+                $Columns = @("No") + @($Columns)
+            }
+
+            $initColumnsFromObj = $false
+        }
+        else {
+            $obj = $obj | select -Property $Columns
+        }
+
+
 
         $Columns | ForEach-Object {
             $val = $obj.$_
             if ($RowNumbers -and $_ -eq "No") {
                 $val = $results.Count + 1
+            }
+
+            if ($val -eq $null) {
+                $val = "null"
             }
 
             $value = $val.ToString()
@@ -50,10 +72,13 @@
             $Columns | ForEach-Object {
                 Write-Host -NoNewline "$($_.PadRight($maxSize[$_])) "
             }
+
             Write-Host ""
+            
             $Columns | ForEach-Object {
                 Write-Host -NoNewline "$(''.PadRight($maxSize[$_], '-')) "
             }
+
             Write-Host ""
         }
 
@@ -89,12 +114,16 @@
 
                 Write-Host -NoNewline @params
             }
+
             Write-Host ""
         }
+        
+        Write-Host ""
     }
 }
 
 
 #Get-Service | select -first 5 | Format-ColorTable -Columns Name, Status -RowNumbers -ColumnColors @{ "No" = "Yellow" }
 #Get-Service | select -first 5 | Format-ColorTable -Columns Name, Status -ColumnColors @{ "Status" = "Red" }
-Get-Service | select -first 5 -Property Name, CanStop | Format-ColorTable -NoHeaders
+#Get-Service | select -first 5 -Property Name, CanStop | Format-ColorTable -RowNumbers
+#Get-Service | select -first 5 | Format-ColorTable -RowNumbers -ColumnColors @{ "No" = "Yellow" }
