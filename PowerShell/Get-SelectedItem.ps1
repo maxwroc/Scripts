@@ -75,4 +75,4 @@ Function Get-SelectedItem() {
 #Get-SelectedItem (Get-Service | select -first 5) -PropertiesToDisplay Name
 # Multiselect
 #Get-SelectedItem (Get-Service | select -first 5) -PropertiesToDisplay Name -Multiselect
-Get-SelectedItem (Get-Service | select -first 5) -PropertiesToDisplay Name, CanStop
+#$item = Get-SelectedItem (Get-Service | select -first 5) -PropertiesToDisplay Name, CanStop
