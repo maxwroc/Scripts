@@ -4,7 +4,7 @@ function Format-ColorTable {
       .SYNOPSIS
         Display the input PSObject(s)/Object(s) with formatted defined colors.
       .DESCRIPTION
-      	Display the input PSObject(s)/Object(s) as formatted table with defined foreground colors for values based on specified conditions or criteria.
+        Display the input PSObject(s)/Object(s) as formatted table with defined foreground colors for values based on specified conditions or criteria.
       .EXAMPLE
         Get-Service | select -first 5 | Format-ColorTable 
         # Displays object in the table in the similar way how Format-Table does
