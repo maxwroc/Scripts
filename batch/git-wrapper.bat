@@ -13,9 +13,7 @@ if "%1"=="checkout" goto :checkout
 if "%1"=="/init" goto :setprompt
 
 :executecommand
-
 git.exe %*
-
 goto :setprompt
 
 :branch
@@ -76,7 +74,7 @@ for /f %%I in ('git.exe rev-parse --abbrev-ref HEAD 2^> NUL') do set GITBRANCH=%
 if "%GITBRANCH%" == "" (
     prompt $P$G
 ) else (
-    prompt $E[42m%GITBRANCH%$E[0m $P$G
+    prompt [$t]$E[42m%GITBRANCH%$E[0m $P$G
 )
 
 EXIT /B %ERRORLEVEL%
