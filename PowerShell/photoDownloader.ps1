@@ -74,7 +74,7 @@ Function GetSubFolder ($folder, $sourcePathChunks, $sourcePathDepth)
 
 Function CopyFiles ($sourceFolder, $destination, $filters) {
     
-    Write-Verbose "Fetching files from source"
+    Write-Verbose "Fetching files from source (this can take a while for a large directories)"
     $items = $sourceFolder.Items()
 
     # create empty collection
@@ -126,6 +126,12 @@ Function IsValidFile ($file, $filter) {
             $namePattern = $filter.ExtractDateFromName
             $date = [DateTime]::ParseExact($filter.Date, "dd/MM/yyyy", $null)
             $fileName = $file.Name
+            
+            if ($fileName.Length -lt [int]$namePattern.Substring.From + $namePattern.Substring.Length) {
+                Write-Verbose "Too short name of the file: $fileName ($($fileName.Length) < $(([int]$namePattern.Substring.From) + $namePattern.Substring.Length))"
+                return 0
+            }
+            
             if($namePattern.SubString) {
                 $fileName = $fileName.Substring($namePattern.Substring.From, $namePattern.Substring.Length)
                 Write-Verbose "Cutting file name: $($file.Name) -> $fileName"
@@ -186,8 +192,15 @@ foreach ($device in $folder.Items()) {
         
         Write-Verbose "Check if destination folder exists: $($config.Destination.Temp)"
         if(-not (Test-Path $config.Destination.Temp)) {
-            Write-Error "Destination folder not found ($($config.Destination.Temp))"
-            exit
+            $ans = Read-Host "Destination folder does not exist do you want to create it? [y/n]"
+            if($ans -eq "y") {
+                New-Item -ItemType directory $config.Destination.Temp
+            }
+            
+            if(-not (Test-Path $config.Destination.Temp)) {
+                Write-Error "Destination folder not found ($($config.Destination.Temp))"
+                exit
+            }
         }
 
         CopyFiles $sourceFolder $config.Destination.Temp $deviceConfig.Filters.Filter

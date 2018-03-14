@@ -18,6 +18,7 @@ doskey gtmm=%wrapper% merge master
 doskey gtlc=%wrapper% diff --name-status master..%GITBRANCH%
 :: last changes in specified dir
 doskey gtdc=%wrapper% log --name-status -10 $*
+doskey gtcl=git clean -fdX
 
 echo Initializing GIT wrapper
 call %wrapper% /init
