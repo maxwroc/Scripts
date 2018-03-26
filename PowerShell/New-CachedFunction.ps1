@@ -22,12 +22,12 @@ Function New-CachedFunction {
     )
 
     # Create cache directory if it doesn't exist
-    if (-not (Test-Path $funcCacheDir)) {
-        New-Item -ItemType Directory $funcCacheDir
+    if (-not (Test-Path $CacheDir)) {
+        New-Item -ItemType Directory $CacheDir
     }
 
     # Path to cache file
-    $filePath = "$funcCacheDir\$Name.json" 
+    $filePath = "$CacheDir\$Name.json" 
 
     # Cache values hash table
     [hashtable]$cachedResults = @{}
