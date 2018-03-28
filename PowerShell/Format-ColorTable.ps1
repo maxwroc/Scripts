@@ -58,7 +58,7 @@ function Format-ColorTable {
                     "Equal" { if ($value -eq $data[$_]) { return $color } }
                     "NotEqual" { if ($value -ne $data[$_]) { return $color } }
                     "Match" { if ($value -match $data[$_]) { return $color } }
-                    "Like" { if ($value -match $data[$_]) { return $color } }
+                    "Like" { if ($value -like $data[$_]) { return $color } }
                 }
             }
 
