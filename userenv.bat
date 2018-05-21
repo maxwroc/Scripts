@@ -29,6 +29,7 @@ doskey ip=for /f "tokens=14" %%a in ('ipconfig ^^^| findstr "IPv4"') do @echo IP
 doskey rww=%scriptsdir%\batch\whack_all_slashes.bat $*
 doskey searchfor=%scriptsdir%batch\searchfor.bat $*
 doskey whereis=dir /b /s $*
+doskey ps=powershell $*
 
 if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
 
