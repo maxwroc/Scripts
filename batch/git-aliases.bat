@@ -1,10 +1,10 @@
 @echo off
-setlocal 
+setlocal
 where git.exe >nul 2>&1
 IF %ERRORLEVEL% NEQ 0 goto :EOF
 
 echo Initializing GIT aliases
-set wrapper=%~dp0git-wrapper.bat
+set wrapper=%~dp0git-prompt\dynamic-prompt /exec %~dp0git-prompt\git-wrapper.cmd
 
 doskey gts=%wrapper% status $*
 doskey gtcm=git commit -am $*
