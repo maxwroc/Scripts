@@ -30,6 +30,8 @@ doskey rww=%scriptsdir%\batch\whack_all_slashes.bat $*
 doskey searchfor=%scriptsdir%batch\searchfor.bat $*
 doskey whereis=dir /b /s $*
 doskey ps=powershell $*
+doskey restartwifi=powershell -File "%scriptsdir%PowerShell\Restart-Device.ps1"
+doskey rwifi=powershell -File "%scriptsdir%PowerShell\Restart-Device.ps1"
 
 if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
 
