@@ -107,9 +107,9 @@ if ($RegisterLogonTask) {
     # 4. Unregistering task created second ago
     # 5. Importing task using updated xml
 
-    $action = New-ScheduledTaskAction -Execute "Powershell.exe" -Argument "-NoProfile -WindowStyle Hidden -File `"$scriptPath`""
+    $action = New-ScheduledTaskAction -Execute "Powershell.exe" -Argument "-File `"$scriptPath`""
     if ($LogFile) {
-        $action = New-ScheduledTaskAction -Execute "Powershell.exe" -Argument "-NoProfile -WindowStyle Hidden -File `"$scriptPath`" -LogFile `"$LogFile`""
+        $action = New-ScheduledTaskAction -Execute "Powershell.exe" -Argument "-File `"$scriptPath`" -LogFile `"$LogFile`""
     }
 
     # Consider removing this
