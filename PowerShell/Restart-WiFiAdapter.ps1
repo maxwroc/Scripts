@@ -4,6 +4,8 @@
 .DESCRIPTION
     Script created when my WiFi was turning in to idle state after hibernation. To fix the issue I have created this script
     which registers a scheduled task and runs after every successful workstation unlock.
+
+    Please check if $networkAdapterName has a correct device name.
 .EXAMPLE
     Restart-Device
     # Checks if the internet connection is live. If not it checks status of the WiFi adapter. In case of "error" status it
@@ -23,6 +25,11 @@ Param(
     [Parameter(Mandatory = $false, Position = 1)][Alias("u")][Switch]$UnregisterLogonTask = $false,
     [Parameter(Mandatory = $false, Position = 2)][string]$LogFile = $null
 )
+
+########################################
+# Network adapter name
+########################################
+$networkAdapterName = "*Atheros AR9271*"
 
 $ErrorActionPreference = "Stop"
 
@@ -134,9 +141,6 @@ if ($UnregisterLogonTask) {
 }
 
 # Start-Sleep -s 15
-
-
-$networkAdapterName = "*Atheros AR9271*"
 
 $isInternetConnectionRunning = [Activator]::CreateInstance([Type]::GetTypeFromCLSID([Guid]'{DCB00C01-570F-4A9B-8D69-199FDBA5723B}')).IsConnectedToInternet
 
