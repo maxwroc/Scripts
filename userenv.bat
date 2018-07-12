@@ -32,6 +32,8 @@ doskey whereis=dir /b /s $*
 doskey ps=powershell $*
 doskey restartwifi=powershell -File "%scriptsdir%PowerShell\Restart-WiFiAdapter.ps1"
 doskey rwifi=powershell -File "%scriptsdir%PowerShell\Restart-WiFiAdapter.ps1"
+doskey cheat=powershell $w=New-Object System.Net.WebClient;$w.Headers.Add('User-Agent','curl/7.16.3');Write-Host 'https://cht.sh/$*';$w.DownloadString('https://cht.sh/$*')
+doskey cht=powershell $w=New-Object System.Net.WebClient;$w.Headers.Add('User-Agent','curl/7.16.3');Write-Host 'https://cht.sh/$*';$w.DownloadString('https://cht.sh/$*')
 
 if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
 
