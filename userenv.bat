@@ -17,6 +17,8 @@ if not defined nodirswitch cd /D %startdir%
 
 call %scriptsdir%batch\git-aliases.bat
 
+doskey cp=copy
+doskey mv=move $*
 doskey n=notepad $*
 doskey cdscripts=cd /D %scriptsdir%
 doskey hosts=notepad "C:\Windows\System32\drivers\etc\hosts"
