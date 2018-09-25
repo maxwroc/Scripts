@@ -19,9 +19,9 @@ call %scriptsdir%batch\git-aliases.bat
 
 doskey n=notepad $*
 doskey cdscripts=cd /D %scriptsdir%
+doskey cdpsmodules=cd /D %PSmodulepath:;=&rem %
 doskey hosts=notepad "C:\Windows\System32\drivers\etc\hosts"
 doskey ls=dir /B $*
-doskey hlp=%0 /hlp
 doskey hlpall=doskey /macros:all $*
 doskey cfg=notepad %scriptsdir%\userenv.bat
 doskey md5=%programsdir%\Checksum\fciv.exe -md5 $1
@@ -29,6 +29,16 @@ doskey ip=for /f "tokens=14" %%a in ('ipconfig ^^^| findstr "IPv4"') do @echo IP
 doskey rww=%scriptsdir%\batch\whack_all_slashes.bat $*
 doskey searchfor=%scriptsdir%batch\searchfor.bat $*
 doskey whereis=dir /b /s $*
+doskey ps=powershell $*
+
+where alias.exe > nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    REM check if "hlp" is defined already
+    alias.exe | find /i "hlp " > nul 2>&1
+    if %ERRORLEVEL% NEQ 0 doskey hlp=%0 /hlp
+) else (
+    doskey hlp=%0 /hlp
+)
 
 if defined localservername doskey %localservername%=%programsdir%\ansicon\x86\ansicon.exe %programsdir%\plink.exe -ssh %localserver% -pw %localserverpass%
 

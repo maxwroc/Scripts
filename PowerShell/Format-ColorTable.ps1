@@ -70,6 +70,9 @@ function Format-ColorTable {
         
         if ($initColumnsFromObj) {
             $Columns = $obj.PSStandardMembers.DefaultDisplayPropertySet.ReferencedPropertyNames
+            if (-not $Columns) {
+                $Columns = $obj | Get-Member -Type Properties | select -ExpandProperty Name
+            }
 
             if ($RowNumbers) {
                 $Columns = @("No") + @($Columns)
@@ -108,6 +111,10 @@ function Format-ColorTable {
     }
 
     End {
+        # Drop columns which won't fit on screen
+        $consoleWidth = (Get-Host).UI.RawUI.MaxWindowSize.Width
+        $sum = 0
+        $Columns = $Columns | where { $sum += $maxSize[$_] + 1; return $sum -lt $consoleWidth }
 
         Write-Host ""
 

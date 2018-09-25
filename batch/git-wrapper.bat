@@ -13,7 +13,8 @@ if "%1"=="checkout" goto :checkout
 if "%1"=="/init" goto :setprompt
 
 :executecommand
-git.exe %*
+endlocal
+call git %*
 goto :setprompt
 
 :branch
@@ -67,6 +68,8 @@ call :listbranches "Select branch to checkout:" "Switching to branch" "git check
 :setprompt
 
 endlocal
+
+if defined DISABLE_GIT_PROMPT EXIT /B %ERRORLEVEL%
 
 set GITBRANCH=
 for /f %%I in ('git.exe rev-parse --abbrev-ref HEAD 2^> NUL') do set GITBRANCH=%%I
