@@ -1,4 +1,4 @@
-﻿
+
 function Format-ColorTable {
     <#
       .SYNOPSIS

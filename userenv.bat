@@ -17,9 +17,11 @@ if not defined nodirswitch cd /D %startdir%
 
 call %scriptsdir%batch\git-aliases.bat
 
+doskey cp=copy
+doskey mv=move $*
 doskey n=notepad $*
 doskey cdscripts=cd /D %scriptsdir%
-doskey cdpsmodules=cd /D %PSmodulepath:;=&rem %
+doskey cdpsmodules=cd /D %PSmodulepath:;=&rem %	   
 doskey hosts=notepad "C:\Windows\System32\drivers\etc\hosts"
 doskey ls=dir /B $*
 doskey hlpall=doskey /macros:all $*
@@ -30,6 +32,10 @@ doskey rww=%scriptsdir%\batch\whack_all_slashes.bat $*
 doskey searchfor=%scriptsdir%batch\searchfor.bat $*
 doskey whereis=dir /b /s $*
 doskey ps=powershell $*
+doskey restartwifi=powershell -File "%scriptsdir%PowerShell\Restart-WiFiAdapter.ps1"
+doskey rwifi=powershell -File "%scriptsdir%PowerShell\Restart-WiFiAdapter.ps1"
+doskey cheat=powershell $w=New-Object System.Net.WebClient;$w.Headers.Add('User-Agent','curl/7.16.3');Write-Host 'https://cht.sh/$*';$w.DownloadString('https://cht.sh/$*')
+doskey cht=powershell $w=New-Object System.Net.WebClient;$w.Headers.Add('User-Agent','curl/7.16.3');Write-Host 'https://cht.sh/$*';$w.DownloadString('https://cht.sh/$*')
 
 where alias.exe > nul 2>&1
 if %ERRORLEVEL% EQU 0 (
