@@ -1,4 +1,4 @@
-﻿
+
 function Format-ColorTable {
     <#
       .SYNOPSIS
@@ -56,9 +56,8 @@ function Format-ColorTable {
             foreach ($_ in $data.GetEnumerator()) {
                 switch($_.Key) {
                     "Equal" { if ($value -eq $data[$_]) { return $color } }
-                    "NotEqual" { if ($value -ne $data[$_]) { return $color } }
                     "Match" { if ($value -match $data[$_]) { return $color } }
-                    "Like" { if ($value -like $data[$_]) { return $color } }
+                    "Like" { if ($value -match $data[$_]) { return $color } }
                 }
             }
 
@@ -71,6 +70,9 @@ function Format-ColorTable {
         
         if ($initColumnsFromObj) {
             $Columns = $obj.PSStandardMembers.DefaultDisplayPropertySet.ReferencedPropertyNames
+            if (-not $Columns) {
+                $Columns = $obj | Get-Member -Type Properties | select -ExpandProperty Name
+            }
 
             if ($RowNumbers) {
                 $Columns = @("No") + @($Columns)
@@ -109,6 +111,10 @@ function Format-ColorTable {
     }
 
     End {
+        # Drop columns which won't fit on screen
+        $consoleWidth = (Get-Host).UI.RawUI.MaxWindowSize.Width
+        $sum = 0
+        $Columns = $Columns | where { $sum += $maxSize[$_] + 1; return $sum -lt $consoleWidth }
 
         Write-Host ""
 

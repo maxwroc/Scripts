@@ -16,6 +16,8 @@ REM git pull
 doskey gtpl=git pull
 REM git pull master
 doskey gtplm=git pull origin master
+REM git merge master
+doskey gtmm=%wrapper% merge master
 REM git branch
 doskey gtb=%wrapper% branch $*
 REM git checkout
@@ -26,6 +28,9 @@ REM local clean up
 doskey gtcl=git clean -fdX
 REM open repo (url) in the browser
 doskey gto=for /f %%a in ('git config --get remote.origin.url') do start %%a
+REM last changes in specified dir
+doskey gtdc=%wrapper% log --name-status -10 $*
+REM open repo in the browser
 doskey openrepo=for /f %%a in ('git config --get remote.origin.url') do start %%a
 
 echo Initializing GIT wrapper
