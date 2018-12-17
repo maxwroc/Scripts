@@ -36,6 +36,7 @@ doskey restartwifi=powershell -File "%scriptsdir%PowerShell\Restart-WiFiAdapter.
 doskey rwifi=powershell -File "%scriptsdir%PowerShell\Restart-WiFiAdapter.ps1"
 doskey cheat=powershell $w=New-Object System.Net.WebClient;$w.Headers.Add('User-Agent','curl/7.16.3');Write-Host 'https://cht.sh/$*';$w.DownloadString('https://cht.sh/$*')
 doskey cht=powershell $w=New-Object System.Net.WebClient;$w.Headers.Add('User-Agent','curl/7.16.3');Write-Host 'https://cht.sh/$*';$w.DownloadString('https://cht.sh/$*')
+doskey knownhosts=%scriptsdir%\batch\known_hosts.bat $*
 
 where alias.exe > nul 2>&1
 if %ERRORLEVEL% EQU 0 (
