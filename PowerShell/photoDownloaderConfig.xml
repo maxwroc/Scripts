@@ -6,7 +6,7 @@
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
       <Filters>
         <Filter Type="NewerThan">
-          <Date>11/09/2018</Date>
+          <Date>23/10/2018</Date>
           <ExtractDateFromName>
             <Substring From="4" Length="15" />
             <Pattern>yyyyMMdd_HHmmss</Pattern>
@@ -19,7 +19,7 @@
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
       <Filters>
         <Filter Type="NewerThan">
-		<Date>02/09/2018</Date>
+          <Date>02/09/2018</Date>
           <DateC>23/11/2017</DateC>
           <DateB>01/03/2017</DateB>
           <ExtractDateFromName>
@@ -44,6 +44,6 @@
     </Source>
   </Sources>
   <Destination>
-    <Temp>D:\Photos\2018.05.20-2018.07.22</Temp>
+    <Temp>D:\Photos\2018.09.11-2018.10.23</Temp>
   </Destination>
 </config>
