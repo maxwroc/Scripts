@@ -6,7 +6,7 @@
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
       <Filters>
         <Filter Type="NewerThan">
-          <Date>12/03/2019</Date>
+          <Date>07/04/2019</Date>
           <ExtractDateFromName>
             <Substring From="4" Length="15" />
             <Pattern>yyyyMMdd_HHmmss</Pattern>
