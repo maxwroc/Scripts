@@ -1,3 +1,0 @@
-[submodule "batch/git-prompt"]
-	path = batch/git-prompt
-	url = https://github.com/maxwroc/git-prompt.git
