@@ -6,7 +6,7 @@
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
       <Filters>
         <Filter Type="NewerThan">
-          <Date>18/06/2019</Date>
+          <Date>12/11/2019</Date>
           <ExtractDateFromName>
             <Substring From="4" Length="15" />
             <Pattern>yyyyMMdd_HHmmss</Pattern>
@@ -44,6 +44,6 @@
     </Source>
   </Sources>
   <Destination>
-    <Temp>D:\Photos\phone</Temp>
+    <Temp>F:\Photos\mama</Temp>
   </Destination>
 </config>
