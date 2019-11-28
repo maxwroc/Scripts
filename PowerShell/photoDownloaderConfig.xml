@@ -14,6 +14,19 @@
         </Filter>
       </Filters>
     </Source>
+    <Source Name="HUAWEI P20 Pro">
+      <Path>HUAWEI P20 Pro\Internal storage\DCIM\Camera</Path>
+      <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
+      <Filters>
+        <Filter Type="NewerThan">
+          <Date>28/11/2019</Date>
+          <ExtractDateFromName>
+            <Substring From="4" Length="15" />
+            <Pattern>yyyyMMdd_HHmmss</Pattern>
+          </ExtractDateFromName>
+        </Filter>
+      </Filters>
+    </Source>
     <Source Name="Magdalena A (Galaxy S5)">
       <Path>Magdalena A (Galaxy S5)\Card\DCIM\Camera</Path>
       <LastDownloadedFileIndex>0</LastDownloadedFileIndex>
@@ -44,6 +57,6 @@
     </Source>
   </Sources>
   <Destination>
-    <Temp>F:\Photos\mama</Temp>
+    <Temp>D:\Photos\mama</Temp>
   </Destination>
 </config>

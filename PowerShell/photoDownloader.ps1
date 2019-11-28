@@ -81,7 +81,7 @@ Function CopyFiles ($sourceFolder, $destination, $filters) {
     $filesToProcess = @()
     Write-Verbose "Iterating over $($items.Count) files"
     for ($i = 0; $i -lt $items.Count; $i++) {
-        Write-Progress -Activity "Detecting how many items to copy" -PercentComplete ($i / $items.Count * 100)
+        Write-Progress -Activity "Detecting how many items to copy" -Status "    Files: ($($filesToProcess.Count))" -PercentComplete ($i / $items.Count * 100)
 
         $isValid = 1
         foreach ($filter in $filters) {
@@ -107,7 +107,7 @@ Function CopyFiles ($sourceFolder, $destination, $filters) {
 
         for ($i=0; $i -lt $filesToProcess.Count; $i++) {
             $fileName = $filesToProcess[$i].Name
-            Write-Progress -Activity "Copying files" -status "    $fileName" -PercentComplete ($i / $filesToProcess.Count * 100)
+            Write-Progress -Activity "Copying files" -Status "    $fileName" -PercentComplete ($i / $filesToProcess.Count * 100)
             if(Test-Path "$($destination)\$fileName") {
                 Write-Host "    Skipping $fileName as it exists already."
             }
