@@ -1,5 +1,5 @@
-# WinScripts
-Windows Batch/PS/Shell Scripting
+# Scripts
+Windows and Unix Batch/PS/Shell Scripting
 
 
 ### [Git wrapper](https://github.com/maxwroc/WinScripts/blob/master/batch/git-wrapper.bat)
