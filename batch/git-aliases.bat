@@ -4,7 +4,7 @@ where git.exe >nul 2>&1
 IF %ERRORLEVEL% NEQ 0 goto :EOF
 
 echo Initializing GIT aliases
-set wrapper=%~dp0git-prompt\dynamic-prompt /exec %~dp0git-prompt\git-wrapper.cmd
+set wrapper=%scriptsdir%\..\git-prompt\dynamic-prompt.cmd /exec %scriptsdir%\..\git-prompt\git-wrapper.cmd
 
 REM git status
 doskey gts=%wrapper% status $*
